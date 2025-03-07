@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Push-Up Counter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            margin: 50px;
+        }
+        h1 {
+            color: #333;
+        }
+        #counter {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 20px;
+        }
+        button {
+            font-size: 20px;
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Push-Up Counter</h1>
+    <div id="counter">0</div>
+    <button onclick="startCounting()">Start</button>
+    <button onclick="resetCount()">Reset</button>
+    
+    <script>
+        let count = 0;
+        let interval;
+        
+        function speakCount(number) {
+            let msg = new SpeechSynthesisUtterance(number);
+            msg.voice = speechSynthesis.getVoices().find(voice => voice.name.includes('Female')) || speechSynthesis.getVoices()[0];
+            window.speechSynthesis.speak(msg);
+        }
+
+        function startCounting() {
+            speakCount('Priyanshu, let\'s do pushups!');
+            clearInterval(interval);
+            interval = setInterval(() => {
+                count++;
+                document.getElementById("counter").innerText = count;
+                speakCount(count);
+            }, 3000);
+        }
+        
+        function resetCount() {
+            clearInterval(interval);
+            count = 0;
+            document.getElementById("counter").innerText = count;
+        }
+    </script>
+</body>
+</html>
